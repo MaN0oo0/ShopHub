@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <style>
+      table tr td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="all d-flex justify-content-between flex-column h-100">
+      <div class="header row">
+        <div
+          class="container col d-flex justify-content-around align-items-center mt-3"
+        >
+          <h2 class="d-flex flex-column h-25 fs-1 align-items-end mb-4">
+            Shop <span class="align-self-end fs-5 pb-3">Hub</span>
+          </h2>
+          <a id="serach"><i class="fa fa-2x fa-search"></i></a>
+          <div class="d-none" id="showSerach"></div>
+        </div>
+        <div class="container col d-flex justify-content-around w-75 mt-3">
+          <div
+            class="link d-flex flex-column justify-content-center align-items-center"
+          >
+            <i class="fa fa-2x fa-home"></i>
+            <a>Home</a>
+          </div>
+
+          <div
+            class="link d-flex flex-column justify-content-center align-items-center btn-order"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            <i class="fa fa-2x fa-shopping-cart"></i>
+            <a>Orders</a>
+          </div>
+          <div
+            class="link d-flex flex-column justify-content-center align-items-center"
+          >
+            <i class="fa fa-2x fa-store fa-solid"></i>
+            <a>Shop</a>
+          </div>
+          <div
+            class="link d-flex flex-column justify-content-center align-items-center"
+          >
+            <i class="fa fa-2x fa-bell fa-solid"></i>
+            <a>Notifecation</a>
+          </div>
+
+          <div
+            class="link d-flex flex-column justify-content-center align-items-center"
+          >
+            <i class="fa fa-2x fa-person fa-solid"></i>
+            <a>Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="row banner">
+        <div class="row m-2">
+          <div class="col container">
+            <div class="Catogray flex-wrap "></div>
+          </div>
+        </div>
+      </div>
+  
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">List Orders</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row footer">
+        <div class="col container">
+          <div class="content">
+            <span>Created By <a href="#">Mohamed </a> ❤</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+   
+
+    <script >
+$( document ).ready(function() {
+
+
+
+   
+            $(".modal-body").load(
+          "orders.html .order  ",
+          function (responsText, StatusText, xhr) {
+            if (StatusText === "success") {
+              console.log(StatusText);
+            }
+          }
+        );
+       
+    
+
+        $.ajax({
+          url: "https://localhost:7290/WeatherForecast",
+          method: "GET",
+          dataType: "JSON",
+          cache: false,
+          data:{},
+          success: function (data, StatusText) {
+            for (let index = 0; index < data.length; index++) {
+              var container = ``;
+
+              container = `<div class="cat d-flex justify-content-around mt-2 flex-column" data-cat="${data[index].temperatureC}">
+<img src="./Images/1.jpg" alt="">
+<div class="text-danger">${data[index].summary}</div>
+<button class="btn btn-primary btn-sm " id="btn-add">add to cart</button>
+</div>
+</div>`;
+              $(".Catogray").append(container);
+         
+            }
+        
+          },
+          error :function(textStauts,res,pp){
+            console.log(res)
+            console.log(pp);
+          }
+    
+        });
+      
+
+       
+      });
+    </script>
+ <script src="./js/main.js" ></script>
+
+  </body>
+</html>
