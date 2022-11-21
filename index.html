@@ -72,11 +72,10 @@
       <div class="row banner">
         <div class="row m-2">
           <div class="col container">
-            <div class="Catogray flex-wrap "></div>
+            <div class="Catogray flex-wrap w-100"></div>
           </div>
         </div>
       </div>
-  
 
       <!-- Modal -->
       <div
@@ -123,58 +122,64 @@
     </div>
     <script src="./js/jquery-3.6.0.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
-   
 
-    <script >
-$( document ).ready(function() {
-
-
-
-   
-            $(".modal-body").load(
-          "orders.html .order  ",
+    <script>
+      $(document).ready(function () {
+        $(".modal-body").load(
+          "orders.html .order ",
           function (responsText, StatusText, xhr) {
             if (StatusText === "success") {
               console.log(StatusText);
             }
           }
         );
-       
-    
 
         $.ajax({
           url: "https://localhost:7290/WeatherForecast",
           method: "GET",
           dataType: "JSON",
           cache: false,
-          data:{},
-          success: function (data, StatusText) {
+          data: {},
+          success: async function (data, StatusText) {
+            var container = ``;
             for (let index = 0; index < data.length; index++) {
-              var container = ``;
-
-              container = `<div class="cat d-flex justify-content-around mt-2 flex-column" data-cat="${data[index].temperatureC}">
+              container = `<div class="cat w-25 d-flex justify-content-around mt-2 flex-column" data-cat="${data[index].temperatureC}">
 <img src="./Images/1.jpg" alt="">
 <div class="text-danger">${data[index].summary}</div>
 <button class="btn btn-primary btn-sm " id="btn-add">add to cart</button>
 </div>
 </div>`;
               $(".Catogray").append(container);
-         
             }
-        
-          },
-          error :function(textStauts,res,pp){
-            console.log(res)
-            console.log(pp);
-          }
-    
-        });
-      
+            $(".Catogray .cat > #btn-add").each(function (i, e) {
+              $(this).click(function () {
+                console.log($(this).parent(".cat").attr("data-cat"));
+                let price = $(this).parent(".cat").attr("data-cat");
+                let Discount = Number(price) - 10;
 
-       
+                var DataTable = `<tr><td>${$(this)
+                  .parent(".cat")
+                  .children(".text-danger")
+                  .text()}</td><td id="price">${$(this)
+                  .parent(".cat")
+                  .attr(
+                    "data-cat"
+                  )}</td><td><del class="text-danger  fw-bold">${Discount}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
+                $("#data").append(DataTable);
+                $("#data .btn-delete").on("click",function(){
+                  $(this).parent("td").parent("tr").css("display","none");
+                })
+                
+              });
+          
+            });
+          },
+          error: function (textStauts, res, pp) {
+            console.log(res);
+          },
+        });
       });
     </script>
- <script src="./js/main.js" ></script>
-
+    <script src="./js/main.js"></script>
   </body>
 </html>
