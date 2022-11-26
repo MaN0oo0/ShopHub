@@ -21,8 +21,13 @@
     </style>
   </head>
   <body>
-    <div class="all d-flex justify-content-between flex-column h-100">
+    <div class="all d-flex justify-content-between flex-column h-100" id="body">
       <div class="header row">
+        <span class="toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
         <div
           class="container col d-flex justify-content-around align-items-center mt-3"
         >
@@ -33,6 +38,7 @@
           <div class="d-none" id="showSerach"></div>
         </div>
         <div class="container col d-flex justify-content-around w-75 mt-3">
+          <span class="close">X</span>
           <div
             class="link d-flex flex-column justify-content-center align-items-center"
           >
@@ -47,6 +53,7 @@
           >
             <i class="fa fa-2x fa-shopping-cart"></i>
             <a>Orders</a>
+            <span class="noty">1</span>
           </div>
           <div
             class="link d-flex flex-column justify-content-center align-items-center"
@@ -106,7 +113,7 @@
                 Close
               </button>
               <button type="button" class="btn btn-primary">
-                Save changes
+             Go To Buying
               </button>
             </div>
           </div>
@@ -151,8 +158,15 @@
 </div>`;
               $(".Catogray").append(container);
             }
+            let Noty=0;
             $(".Catogray .cat > #btn-add").each(function (i, e) {
+              
               $(this).click(function () {
+         
+                Noty++;
+                $(".noty").css("display","flex");
+                $(".noty").html(Noty);
+                alert("Iteam Add To Orders ")
                 console.log($(this).parent(".cat").attr("data-cat"));
                 let price = $(this).parent(".cat").attr("data-cat");
                 let Discount = Number(price) - 10;
@@ -167,9 +181,18 @@
                   )}</td><td><del class="text-danger  fw-bold">${Discount}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
                 $("#data").append(DataTable);
                 $("#data .btn-delete").on("click",function(){
+                  if (Noty<=0) {
+                  Noty=0
+                }
+                else{
+                  $(".noty").html(--Noty);
+                }
                   $(this).parent("td").parent("tr").css("display","none");
+               
+              
+                  
                 })
-                
+            
               });
           
             });
