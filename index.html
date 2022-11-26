@@ -22,12 +22,12 @@
   </head>
   <body>
     <div class="all d-flex justify-content-between flex-column h-100" id="body">
+      <span class="toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
       <div class="header row">
-        <span class="toggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
         <div
           class="container col d-flex justify-content-around align-items-center mt-3"
         >
@@ -75,6 +75,12 @@
             <a>Profile</a>
           </div>
         </div>
+        <div class="container m-2">
+          <!-- Add New Product -->
+          <div class="add-product">
+            <a class="btn btn-primary add">Add New Product</a>
+          </div>
+        </div>
       </div>
       <div class="row banner">
         <div class="row m-2">
@@ -113,7 +119,7 @@
                 Close
               </button>
               <button type="button" class="btn btn-primary">
-             Go To Buying
+                Go To Buying
               </button>
             </div>
           </div>
@@ -136,70 +142,89 @@
           "orders.html .order ",
           function (responsText, StatusText, xhr) {
             if (StatusText === "success") {
-              console.log(StatusText);
+              console.log(StatusText + " Load Page");
             }
           }
         );
 
         $.ajax({
-          url: "https://localhost:7290/WeatherForecast",
+          url: "https://localhost:7290/api/Product/GetData",
           method: "GET",
           dataType: "JSON",
           cache: false,
           data: {},
-          success: async function (data, StatusText) {
+          success: function (res, StatusText) {
+            console.log(StatusText + " Load Data From Api");
             var container = ``;
-            for (let index = 0; index < data.length; index++) {
-              container = `<div class="cat w-25 d-flex justify-content-around mt-2 flex-column" data-cat="${data[index].temperatureC}">
-<img src="./Images/1.jpg" alt="">
-<div class="text-danger">${data[index].summary}</div>
-<button class="btn btn-primary btn-sm " id="btn-add">add to cart</button>
-</div>
-</div>`;
-              $(".Catogray").append(container);
-            }
-            let Noty=0;
-            $(".Catogray .cat > #btn-add").each(function (i, e) {
-              
-              $(this).click(function () {
-         
-                Noty++;
-                $(".noty").css("display","flex");
-                $(".noty").html(Noty);
-                alert("Iteam Add To Orders ")
-                console.log($(this).parent(".cat").attr("data-cat"));
-                let price = $(this).parent(".cat").attr("data-cat");
-                let Discount = Number(price) - 10;
 
-                var DataTable = `<tr><td>${$(this)
-                  .parent(".cat")
-                  .children(".text-danger")
-                  .text()}</td><td id="price">${$(this)
-                  .parent(".cat")
-                  .attr(
-                    "data-cat"
-                  )}</td><td><del class="text-danger  fw-bold">${Discount}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
-                $("#data").append(DataTable);
-                $("#data .btn-delete").on("click",function(){
-                  if (Noty<=0) {
-                  Noty=0
-                }
-                else{
-                  $(".noty").html(--Noty);
-                }
-                  $(this).parent("td").parent("tr").css("display","none");
-               
-              
-                  
-                })
-            
-              });
-          
-            });
+            console.log(res);
+
+            if (res.message == "Data Null") {
+              $(".Catogray").append(
+                `<div class="alert w-100 text-capitalize text-center alert-dark bg-black text-white ">No Data Found</div>`
+              );
+            } else {
+              var arr = res.data;
+              for (let index = 0; index < arr.length; index++) {
+                console.log(arr[index].id);
+
+                container = `<div class="cat w-25 d-flex justify-content-around mt-2 flex-column" data-cat="${arr[index].id}">
+                    <img src="./Images/1.jpg" alt="">
+                    <div class="text-danger fw-bold d-flex justify-content-between align-items-center w-25 p-2"><span class="m-2 text-secondary ">${arr[index].name}</span>
+                      <span class="btn btn-primary m-2">${arr[index].pricePurshers}$</span>
+                      </div>
+                    <button class="btn btn-primary btn-sm " id="btn-add">add to cart</button>
+                    </div>
+                    </div>`;
+                $(".Catogray").append(container);
+
+                let Noty = 0;
+                // add element to list order ==>
+                $(".Catogray .cat > #btn-add").each(function (i, e) {
+                  $(this).click(function () {
+                    Noty++;
+                    $(".noty").css("display", "flex");
+                    $(".noty").html(Noty);
+                    alert("Iteam Add To Orders ");
+                    console.log($(this).parent(".cat").attr("data-cat"));
+                    let price = arr[index].pricePurshers;
+                    let Discount = Number(price - 10);
+
+                    var DataTable = `<tr><td>${arr[index].name}</td><td id="price">${Discount}$</td><td><del class="text-danger  fw-bold">${price}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
+                    $("#data").append(DataTable);
+                    //delete element from list
+
+                    $("#data .btn-delete").on("click", function () {
+                      if (Noty <= 0) {
+                        Noty = 0;
+                      } else {
+                        $(".noty").html(--Noty);
+                      }
+                      $(this).parent("td").parent("tr").remove();
+                    });
+                  });
+                });
+              }
+            }
           },
+
           error: function (textStauts, res, pp) {
             console.log(res);
+            $(".Catogray").append(`<label>API not Working ...</label>`);
           },
+        });
+
+        // Add New Product
+
+        $(".add-product > .add").on("click", function () {
+          $("body").load(
+            "AddNewProduct.html",
+            function (responsText, StatusText) {
+              if (StatusText === "success") {
+                console.log(StatusText + " Load Page Add Product");
+              }
+            }
+          );
         });
       });
     </script>

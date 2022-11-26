@@ -8,6 +8,11 @@
 body{
     background-color: #ccc;
 }
+.all{
+   justify-content: space-between;
+   
+  
+}
  .header{
     margin: 0 auto;
     width: 90%;
@@ -24,11 +29,11 @@ border-bottom-left-radius: 30px;
    .all .header{
       position: fixed;
       z-index: 99999;
-      left: 0;
+      left: 0px;
       top:0;
       width: 100%;
       height: 100%;
-      background-color: #333;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -36,33 +41,34 @@ border-bottom-left-radius: 30px;
       transition: .5s;
       transform: translateX(-100%);
    }
-   .all .header.open{
-    
-         transform: translateX(0);
-    
-   }
-   .all .header.close{
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      color: white;
-      width: 50px;
+   .all .header div{
       display: flex;
-      height: 50px;
       justify-content: center;
+      flex-direction: column;
       align-items: center;
-      font-size: 30px;
-      border: 2px solid white;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: .5s;
-  }
+   }
+   .all .header .link {
+background-color: white;
+   }
+   .toggle{
+      display: flex  !important;
+   }
+   .all .header .close{
+      display: flex !important;
+   }
+   .all .footer{
+      transform: translate(0%,960%);
+   }
+   .banner{
+      transform: translate(0%,400%);
+   }
+  
  }
  
 .toggle{
    width: 50px;
    height: 50px;
-   display: flex;
+   display: none;
    background-color: #eee;
    cursor: pointer;
    /* flex-direction: column;
@@ -85,62 +91,33 @@ transition: .5s ;
 background-color: #333;
 }
 
-nav{
-   position: fixed;
-   z-index: 99999;
-   left: 0;
-   top:0;
-   width: 100%;
-   height: 100%;
-   background-color: #333;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   
-   transition: .5s;
-   transform: translateX(-100%);
-   
-   }
-   nav.open{
-       transform: translateX(0);
-   }
-   
-   
-   nav .close{
-       position: fixed;
-       top: 20px;
-       right: 20px;
-       color: white;
-       width: 50px;
-       display: flex;
-       height: 50px;
-       justify-content: center;
-       align-items: center;
-       font-size: 30px;
-       border: 2px solid white;
-       border-radius: 50%;
-       cursor: pointer;
-       transition: .5s;
-   }
-   nav .close:hover{
-        border-color: indianred;
-        color: indianred;
-   }
-   
-   nav a{
-       color: #eee;
-       text-decoration: none;
-       font-size: 35px;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       flex-basis: 80px;
-       transition: .5s;
-   }
-   nav a:hover  {
-       background-color: rgb(0 0 0 /50%);
-   
-   }
+.all .header.open{
+    
+   transform: translateX(0);
+
+}
+
+.all .header .close{
+position: fixed;
+top: 20px;
+right: 20px;
+color: black;
+width: 50px;
+display: none;
+height: 50px;
+justify-content: center;
+align-items: center;
+font-size: 30px;
+border: 2px solid white;
+border-radius: 50%;
+cursor: pointer;
+transition: .5s;
+}
+.all .header .close:hover{
+border-color: indianred;
+color: indianred;
+}
+
 
 
  h2>span{
@@ -248,12 +225,15 @@ opacity: 1;
  }
  .footer{
     background-color: black;
-    margin: 0% auto;
+    margin: 0px auto;
+
     width: 90%;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding: 3%;
     color: white;
+
+
  }
  .footer .content{
     display: flex;
