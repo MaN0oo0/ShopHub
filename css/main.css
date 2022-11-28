@@ -22,9 +22,33 @@ border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
  }
  @media only screen and (max-width: 768px) {
+   *{
+      font-size: 10px !important;
+   }
    /* For mobile phones: */
    [class*="col-"] {
      width: 100%;
+   }
+   .Catogray{
+      flex-wrap: wrap;
+width: 100%;
+   }
+   .Catogray .cat{
+      width: 80%;
+   
+      padding: 20px;
+   }
+   .cat .btn{
+      width: 85% !important;
+     height: 5%;
+
+   }
+   .all{
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
    }
    .all .header{
       position: fixed;
@@ -35,7 +59,7 @@ border-bottom-left-radius: 30px;
       height: 100%;
       background-color: #fff;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       
       transition: .5s;
@@ -46,6 +70,7 @@ border-bottom-left-radius: 30px;
       justify-content: center;
       flex-direction: column;
       align-items: center;
+
    }
    .all .header .link {
 background-color: white;
@@ -56,12 +81,12 @@ background-color: white;
    .all .header .close{
       display: flex !important;
    }
-   .all .footer{
+   /* .all .footer{
       transform: translate(0%,960%);
    }
    .banner{
       transform: translate(0%,400%);
-   }
+   } */
   
  }
  
@@ -172,7 +197,7 @@ color: indianred;
  .banner .Catogray .cat{
     margin: 0 2%;
 position: relative;
-    width: 30%;
+    width: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,10 +223,10 @@ display: flex;
     border-radius: 8px;
     justify-content: center;
  }
- .Catogray .cat:hover.cat::before{
+ /* .Catogray .cat:hover.cat::before{
  transform:translate(130px,0px) ;
 opacity: 1;
- }
+ } */
 
  /* .Catogray .cat::after{
     content: "Show!";

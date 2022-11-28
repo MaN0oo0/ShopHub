@@ -78,7 +78,12 @@
         <div class="container m-2">
           <!-- Add New Product -->
           <div class="add-product">
-            <a class="btn btn-primary add">Add New Product</a>
+            <a
+              class="btn btn-primary add"
+              href="AddNewProduct.html"
+              target="_self"
+              >Add New Product</a
+            >
           </div>
         </div>
       </div>
@@ -148,7 +153,8 @@
         );
 
         $.ajax({
-          url: "https://localhost:7290/api/Product/GetData",
+           url: "https://localhost:7290/api/Product/GetData",
+          // url:"https://ecom-fake-api.onrender.com/t-shirts",
           method: "GET",
           dataType: "JSON",
           cache: false,
@@ -167,44 +173,50 @@
               var arr = res.data;
               for (let index = 0; index < arr.length; index++) {
                 console.log(arr[index].id);
-
-                container = `<div class="cat w-25 d-flex justify-content-around mt-2 flex-column" data-cat="${arr[index].id}">
-                    <img src="./Images/1.jpg" alt="">
-                    <div class="text-danger fw-bold d-flex justify-content-between align-items-center w-25 p-2"><span class="m-2 text-secondary ">${arr[index].name}</span>
-                      <span class="btn btn-primary m-2">${arr[index].pricePurshers}$</span>
+                const d = new Date();
+                let date = `${d.getDate(arr[index].creationDate)}/${d.getMonth(
+                  arr[index].creationDate
+                )}/${d.getFullYear(arr[index].creationDate)}`;
+                container = `<div class="cat d-flex justify-content-around mt-2 flex-column" data-cat="${arr[index].id}">
+                  <div>
+                    <img src="./Images/2.jpg" alt="">
+                    </div>
+                    <div class="text-danger text-md-center fw-bold d-flex justify-content-between align-items-center w-100 p-2"><span class="m-2 text-secondary "><span>${arr[index].name}</span>
+                      <span class="btn btn-primary m-md-2">${arr[index].pricePurshers}$</span>
                       </div>
+                      <div class="text-muted m-md-2">${date}</div>
                     <button class="btn btn-primary btn-sm " id="btn-add">add to cart</button>
                     </div>
                     </div>`;
                 $(".Catogray").append(container);
 
-                let Noty = 0;
-                // add element to list order ==>
-                $(".Catogray .cat > #btn-add").each(function (i, e) {
-                  $(this).click(function () {
-                    Noty++;
-                    $(".noty").css("display", "flex");
-                    $(".noty").html(Noty);
-                    alert("Iteam Add To Orders ");
-                    console.log($(this).parent(".cat").attr("data-cat"));
-                    let price = arr[index].pricePurshers;
-                    let Discount = Number(price - 10);
+                var Noty = 0;
+          
+              $(".Catogray .cat  #btn-add").click(function  () {
+                Noty++;
+                $(".noty").css("display", "flex");
+                $(".noty").html(Noty);
+                alert("Iteam Add To Orders ");
 
-                    var DataTable = `<tr><td>${arr[index].name}</td><td id="price">${Discount}$</td><td><del class="text-danger  fw-bold">${price}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
-                    $("#data").append(DataTable);
-                    //delete element from list
+                let price = arr[index].pricePurshers;
+                let Discount = Number(price - 10);
 
-                    $("#data .btn-delete").on("click", function () {
-                      if (Noty <= 0) {
-                        Noty = 0;
-                      } else {
-                        $(".noty").html(--Noty);
-                      }
-                      $(this).parent("td").parent("tr").remove();
-                    });
-                  });
+                var DataTable = `<tr><td>${arr[index].id}</td><td>${arr[index].name}</td><td id="price">${Discount}$</td><td><del class="text-danger  fw-bold">${price}$</del></td><td><a class="btn btn-danger btn-sm btn-delete">Delete</a></tr>`;
+                $("#data").append(DataTable);
+                //delete element from list
+
+                $("#data .btn-delete").on("click", function () {
+                  if (Noty <= 0) {
+                    Noty = 0;
+                  } else {
+                    $(".noty").html(--Noty);
+                  }
+                  $(this).parent("td").parent("tr").remove();
                 });
+              });
               }
+              // add element to list order ==>
+
             }
           },
 
@@ -216,16 +228,16 @@
 
         // Add New Product
 
-        $(".add-product > .add").on("click", function () {
-          $("body").load(
-            "AddNewProduct.html",
-            function (responsText, StatusText) {
-              if (StatusText === "success") {
-                console.log(StatusText + " Load Page Add Product");
-              }
-            }
-          );
-        });
+        // $(".add-product > .add").on("click", function () {
+        //   $("body").load(
+        //     "AddNewProduct.html",
+        //     function (responsText, StatusText) {
+        //       if (StatusText === "success") {
+        //         console.log(StatusText + " Load Page Add Product");
+        //       }
+        //     }
+        //   );
+        // });
       });
     </script>
     <script src="./js/main.js"></script>
